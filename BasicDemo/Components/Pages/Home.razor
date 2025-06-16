@@ -1,0 +1,31 @@
+﻿@page "/"
+@inject IConfiguration Config
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+<p>MySetting Value: @mySetting</p>
+<p>My Sub-Setting Value: @mySubsetting</p>
+<p>My Sub-Sub-Setting Value: @mySubSubsetting</p>
+@* <p>My Sub-Sub-Setting Value: @mySubSubsetting</p> *@
+<p>Connection String Value: @connectionString</p>
+
+
+@code{
+    const string NotFound = "Setting not found.";
+    string mySetting = "";
+    string mySubsetting = "";
+    string mySubSubsetting = "";
+    string connectionString = "";
+
+    protected override void OnInitialized()
+    {
+        mySetting = Config.GetValue<string>("MySetting", NotFound);
+        mySubsetting = Config.GetValue<string>("MainSetting:SubSetting", NotFound);
+        mySubSubsetting = Config.GetValue<string>("MainSetting:SubSection:SubSubSetting", NotFound);
+        connectionString = Config.GetConnectionString("DefauLT");
+    }
+
+
+}
