@@ -1,4 +1,5 @@
 using BasicDemo.Components;
+using BasicDemo.Options;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,9 @@ if (!builder.Environment.IsDevelopment())
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.Configure<EmailSettingsOptions>(
+    builder.Configuration.GetSection("EmailSettings"));
 
 var app = builder.Build();
 

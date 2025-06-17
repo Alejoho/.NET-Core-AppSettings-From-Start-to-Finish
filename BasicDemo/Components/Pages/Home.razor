@@ -1,5 +1,7 @@
 ﻿@page "/"
+@using Microsoft.Extensions.Options
 @inject IConfiguration Config
+@inject IOptions<EmailSettingsOptions> _emailOpts
 
 <PageTitle>Home</PageTitle>
 
@@ -11,6 +13,19 @@
 @* <p>My Sub-Sub-Setting Value: @mySubSubsetting</p> *@
 <p>Connection String Value: @connectionString</p>
 
+<br />
+<br />
+
+<h2>Email Settings:</h2>
+<p>Enabled: @emailOpts.EnableSystem</p>
+<p>TimeOut(seconds): @emailOpts.TimeOutInSeconds</p>
+<p>Servers:  &nbsp
+    @foreach(var server in emailOpts.Servers){
+        @server     @:&nbsp;
+    }
+</p>
+<p>Admin: @emailOpts.Admin.FirstName @emailOpts.Admin.LastName</p>
+
 
 @code{
     const string NotFound = "Setting not found.";
@@ -19,12 +34,21 @@
     string mySubSubsetting = "";
     string connectionString = "";
 
+    EmailSettingsOptions emailOpts = new();
+
     protected override void OnInitialized()
     {
         mySetting = Config.GetValue<string>("MySetting", NotFound);
         mySubsetting = Config.GetValue<string>("MainSetting:SubSetting", NotFound);
         mySubSubsetting = Config.GetValue<string>("MainSetting:SubSection:SubSubSetting", NotFound);
         connectionString = Config.GetConnectionString("DefauLT");
+
+
+
+        // emailOpts = Config.GetSection("EmailSettings")
+        //     .Get<EmailSettingsOptions>();
+
+        emailOpts = _emailOpts.Value;
     }
 
 
