@@ -17,6 +17,30 @@ builder.Services.AddRazorComponents()
 builder.Services.Configure<EmailSettingsOptions>(
     builder.Configuration.GetSection("EmailSettings"));
 
+#region Configuration Hierarchy
+
+builder.Configuration.Sources.Clear();
+
+builder.Configuration.AddJsonFile("appsettings.json",
+    optional: false,
+    reloadOnChange: true);
+
+builder.Configuration.AddJsonFile(
+    $"appsettings.{builder.Environment.EnvironmentName}.json",
+    optional: true,
+    reloadOnChange: true);
+
+if (builder.Environment.IsDevelopment())
+{
+    builder.Configuration.AddUserSecrets<Program>(true, true);
+}
+
+builder.Configuration.AddEnvironmentVariables();
+
+builder.Configuration.AddCommandLine(args);
+
+#endregion
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
