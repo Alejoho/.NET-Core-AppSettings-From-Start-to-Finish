@@ -32,6 +32,8 @@ builder.Configuration.AddJsonFile(
 
 builder.Configuration.AddJsonFile("custom.json", optional: true, reloadOnChange: true);
 
+builder.Configuration.AddXmlFile("custom.xml", optional: true, reloadOnChange: true); ;
+
 if (builder.Environment.IsDevelopment())
 {
     builder.Configuration.AddUserSecrets<Program>(true, true);

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+	<!--
+	<MainSetting>
+		<SubSetting>
+			This is my sub-setting in custom.xml
+		</SubSetting>
+	</MainSetting>
+	-->
+	<MainSetting SubSetting="This is my sub-setting in custom.xml">
+		<subsection subsubsetting="Nested setting in custom.xml"/>
+	</MainSetting>
+</configuration>
