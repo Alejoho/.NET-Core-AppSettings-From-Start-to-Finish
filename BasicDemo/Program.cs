@@ -19,6 +19,13 @@ builder.Services.Configure<EmailSettingsOptions>(
 
 #region Configuration Hierarchy
 
+var memCollection = new Dictionary<string, string>()
+{
+    { "MainSetting:SubSetting","This is a setting in memory"},
+    {"key","value" }
+};
+
+
 builder.Configuration.Sources.Clear();
 
 builder.Configuration.AddJsonFile("appsettings.json",
@@ -35,6 +42,8 @@ builder.Configuration.AddJsonFile("custom.json", optional: true, reloadOnChange:
 builder.Configuration.AddXmlFile("custom.xml", optional: true, reloadOnChange: true); ;
 
 builder.Configuration.AddIniFile("custom.ini", optional: true, reloadOnChange: true);
+
+builder.Configuration.AddInMemoryCollection(memCollection);
 
 if (builder.Environment.IsDevelopment())
 {
