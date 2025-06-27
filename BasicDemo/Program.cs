@@ -30,6 +30,8 @@ builder.Configuration.AddJsonFile(
     optional: true,
     reloadOnChange: true);
 
+builder.Configuration.AddJsonFile("custom.json", optional: true, reloadOnChange: true);
+
 if (builder.Environment.IsDevelopment())
 {
     builder.Configuration.AddUserSecrets<Program>(true, true);
@@ -38,6 +40,8 @@ if (builder.Environment.IsDevelopment())
 builder.Configuration.AddEnvironmentVariables();
 
 builder.Configuration.AddCommandLine(args);
+
+
 
 #endregion
 
